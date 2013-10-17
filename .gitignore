@@ -1,3 +1,4 @@
-.idea
-.sass-cache
-node_modules
+*.idea
+*.sass-cache
+client/npm-debug.log
+client/node_modules
