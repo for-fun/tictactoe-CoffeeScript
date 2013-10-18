@@ -1,20 +1,38 @@
 (function() {
-  var gameWindow, gameWindowLi, i, _i;
+  var Game, go;
 
-  gameWindow = $('.window');
+  Game = (function() {
+    function Game() {
+      this.addElement();
+      this.clickElement();
+    }
 
-  for (i = _i = 1; _i <= 9; i = ++_i) {
-    gameWindow.append('<li class="item" data-id=' + i + '></li>');
-    console.log(i);
-  }
+    Game.prototype.addElement = function() {
+      var gameWindow, i, _i, _results;
+      gameWindow = $('.window');
+      _results = [];
+      for (i = _i = 1; _i <= 9; i = ++_i) {
+        gameWindow.append('<li class="item" data-id=' + i + '></li>');
+        _results.push(console.log(i));
+      }
+      return _results;
+    };
 
-  gameWindowLi = $('.window .item');
+    Game.prototype.clickElement = function() {
+      var gameWindowLi;
+      gameWindowLi = $('.window .item');
+      return gameWindowLi.click(function() {
+        var $this;
+        $this = $(this);
+        $this.addClass('zero');
+        return console.log(123);
+      });
+    };
 
-  gameWindowLi.click(function() {
-    var $this;
-    $this = $(this);
-    $this.addClass('zero');
-    return console.log(123);
-  });
+    return Game;
+
+  })();
+
+  go = new Game;
 
 }).call(this);

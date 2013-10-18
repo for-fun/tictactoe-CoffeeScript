@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 		path: 'app',
 		liveReloadPort: 35729
 	};
-	
+
 	require('load-grunt-tasks')(grunt);
 
 	require('connect-livereload')({
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 					'<%= conf.path %>/sass/*.sass',
 					'<%= conf.path %>/sass/*.scss',
 					'<%= conf.path %>/*.html',
-					'<%= conf.path %>/scripts/*.js'
+					'<%= conf.path %>/coffee/*.coffee'
 				],
 				options: {
 					livereload: config.liveReloadPort
@@ -56,7 +56,11 @@ module.exports = function (grunt) {
 		coffee: {
 			compile: {
 				files: {
-					'<%= conf.path %>/assets/scripts/common.js': '<%= conf.path %>/coffee/app.coffee'
+					'<%= conf.path %>/assets/scripts/common.js': [
+						'<%= conf.path %>/coffee/Gui.coffee',
+						'<%= conf.path %>/coffee/Game.coffee',
+						'<%= conf.path %>/coffee/app.coffee'
+					]
 				}
 			}
 		},
