@@ -76,9 +76,11 @@ class Game
             if (zeroResult == true)
                 alert "Нолик выиграл!"
                 location.reload()
+                return false
             if (xResult == true)
                 alert "Крестик выиграл!"
                 location.reload()
+                return false
 
         if (elemZero + elemX == 9)
             alert "Ничья!"
