@@ -41,15 +41,19 @@ body {
   float: left;
   box-shadow: 0 0 0 6px #275d6f;
   cursor: pointer;
+  -webkit-transition: background-image 2s ease-in-out;
+  -moz-transition: background-image 2s ease-in-out;
+  -o-transition: background-image 2s ease-in-out;
+  transition: background-image 2s ease-in-out;
 }
 
-/* line 33, ../../sass/style.sass */
+/* line 34, ../../sass/style.sass */
 
 .window li:hover {
   box-shadow: 0 0 0 6px #275d6f, inset -3px -3px 30px rgba(255, 255, 255, 0.5);
 }
 
-/* line 35, ../../sass/style.sass */
+/* line 36, ../../sass/style.sass */
 
 .window li.x {
   cursor: default;
@@ -57,13 +61,13 @@ body {
   box-shadow: 0 0 0 6px #275d6f, inset -3px -3px 30px rgba(255, 255, 255, 0.2);
 }
 
-/* line 39, ../../sass/style.sass */
+/* line 40, ../../sass/style.sass */
 
 .window li.x:hover {
   box-shadow: 0 0 0 6px #275d6f, inset -3px -3px 30px rgba(255, 255, 255, 0.2);
 }
 
-/* line 41, ../../sass/style.sass */
+/* line 42, ../../sass/style.sass */
 
 .window li.zero {
   cursor: default;
@@ -71,7 +75,7 @@ body {
   box-shadow: 0 0 0 6px #275d6f, inset -3px -3px 30px rgba(255, 255, 255, 0.2);
 }
 
-/* line 45, ../../sass/style.sass */
+/* line 46, ../../sass/style.sass */
 
 .window li.zero:hover {
   box-shadow: 0 0 0 6px #275d6f, inset -3px -3px 30px rgba(255, 255, 255, 0.2);

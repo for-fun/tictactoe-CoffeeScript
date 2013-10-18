@@ -10,7 +10,7 @@
 
     elemX = 0;
 
-    winningArray = [123, 456, 789, 147, 258, 369, 159, 359];
+    winningArray = [123, 456, 789, 147, 258, 369, 159, 357];
 
     function Game() {
       this.addElement();
@@ -25,6 +25,10 @@
         _results.push(gameWindow.append('<li class="item" data-id=' + i + '></li>'));
       }
       return _results;
+    };
+
+    Game.prototype.loadImage = function() {
+      return console.log('11');
     };
 
     Game.prototype.clickElement = function() {
@@ -52,7 +56,7 @@
     };
 
     Game.prototype.checkWinning = function(li) {
-      var checker, elementsNumber, i, x, xArr, zero, zeroArr, _i;
+      var checker, i, num, x, xArr, xResult, zero, zeroArr, zeroResult, _i, _j, _len;
       this.li = li;
       zeroArr = [];
       xArr = [];
@@ -67,17 +71,31 @@
           xArr.push(x);
         }
       }
-      console.log('zero', zeroArr);
-      console.log('x', xArr);
-      elementsNumber = 0;
       checker = function(mainStr, checkStr) {
-        mainStr = mainStr.split('');
-        checkStr = checkStr.split('');
-        return mainStr.split('').reduce(function(a, b) {
-          return a.replace(RegExp(b), '');
-        }, checkStr).length === 0;
+        return checkStr.split('').reduce(function(a, b) {
+          return a.replace(b, '');
+        }, mainStr).length === 0;
       };
-      return true;
+      for (_j = 0, _len = winningArray.length; _j < _len; _j++) {
+        num = winningArray[_j];
+        num = num.toString();
+        zeroArr = zeroArr.toString();
+        xArr = xArr.toString();
+        zeroResult = checker(num, zeroArr);
+        xResult = checker(num, xArr);
+        if (zeroResult === true) {
+          alert("Нолик выиграл!");
+          location.reload();
+        }
+        if (xResult === true) {
+          alert("Крестик выиграл!");
+          location.reload();
+        }
+      }
+      if (elemZero + elemX === 9) {
+        alert("Ничья!");
+        return location.reload();
+      }
     };
 
     return Game;
@@ -85,5 +103,13 @@
   })();
 
   go = new Game;
+
+  $.fn.preload = function() {
+    return this.each(function() {
+      return $('<img/>')[0].src = this;
+    });
+  };
+
+  $(['assets/images/X.png', 'assets/images/0.png']).preload();
 
 }).call(this);

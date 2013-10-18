@@ -14,7 +14,7 @@ class Game
         369,
         # по диагонали
         159,
-        359,
+        357,
     ]
 
     constructor: () ->
@@ -26,6 +26,9 @@ class Game
 
         for i in [1..9]
             gameWindow.append('<li class="item" data-id=' + i + '></li>')
+
+    loadImage: () ->
+        console.log '11'
 
     clickElement: () ->
         gameWindowLi = $('.window .item')
@@ -57,19 +60,36 @@ class Game
                 x = i + 1
                 xArr.push(x)
 
-        console.log 'zero', zeroArr
-        console.log 'x', xArr
-
-
-        elementsNumber = 0
-
         checker = (mainStr, checkStr) ->
-            mainStr = mainStr.split('')
-            checkStr = checkStr.split('')
-            return mainStr.split('').reduce( (a, b) ->
-                return a.replace(RegExp(b), '')
-            , checkStr).length == 0
+            return checkStr.split('').reduce((a, b) ->
+                return a.replace(b, '');
+            , mainStr).length == 0
 
-        return true
+        for num in winningArray
+            num = num.toString()
+            zeroArr = zeroArr.toString()
+            xArr = xArr.toString()
+
+            zeroResult = checker(num, zeroArr)
+            xResult = checker(num, xArr)
+
+            if (zeroResult == true)
+                alert "Нолик выиграл!"
+                location.reload()
+            if (xResult == true)
+                alert "Крестик выиграл!"
+                location.reload()
+
+        if (elemZero + elemX == 9)
+            alert "Ничья!"
+            location.reload()
+
 
 go = new Game
+
+$.fn.preload = ->
+    this.each(->
+        $('<img/>')[0].src = this
+    )
+
+$(['assets/images/X.png', 'assets/images/0.png']).preload()
