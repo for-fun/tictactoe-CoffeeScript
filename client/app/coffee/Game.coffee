@@ -1,5 +1,5 @@
 class Game
-    elem = true
+    elem = false
     elemZero = 0
     elemX = 0
 

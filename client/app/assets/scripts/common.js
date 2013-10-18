@@ -4,7 +4,7 @@
   Game = (function() {
     var elem, elemX, elemZero, winningArray;
 
-    elem = true;
+    elem = false;
 
     elemZero = 0;
 
