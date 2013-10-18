@@ -22,7 +22,13 @@ module.exports = function (grunt) {
 					'<%= conf.path %>/sass/*.sass',
 					'<%= conf.path %>/sass/*.scss'
 				],
-				tasks: ['compass:dev']
+				tasks: ['compass:dev', 'autoprefixer:style']
+			},
+			coffee: {
+				files: [
+					'<%= conf.path %>/coffee/*.coffee'
+				],
+				tasks: ['coffee:compile']
 			},
 			livereload: {
 				files: [
@@ -47,7 +53,13 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-
+		coffee: {
+			compile: {
+				files: {
+					'<%= conf.path %>/assets/scripts/common.js': '<%= conf.path %>/coffee/app.coffee'
+				}
+			}
+		},
 		connect: {
 			options: {
 				port: 5555,
@@ -68,6 +80,17 @@ module.exports = function (grunt) {
 		open: {
 			server: {
 				url: 'http://localhost:<%= connect.options.port %>/index.html'
+			}
+		},
+		autoprefixer: {
+			options: {
+				browsers: ['opera 12', 'ff 15', 'chrome 25', 'ie 8', 'ie 7']
+			},
+			style: {
+				options: {
+				},
+				src: '<%= conf.path %>/assets/css/style.css',
+				dest: '<%= conf.path %>/assets/css/style.css'
 			}
 		}
 	});
