@@ -2,7 +2,7 @@
   var Game, go;
 
   Game = (function() {
-    var elem, elemX, elemZero, gameWin, winningArray;
+    var cellAmount, elem, elemX, elemZero, gameWin, winningArray;
 
     elem = false;
 
@@ -12,12 +12,14 @@
 
     gameWin = false;
 
+    cellAmount = 0;
+
     winningArray = [];
 
     function Game(cellNumber) {
       this.cellNumber = cellNumber;
       winningArray = this.getWinningNumbers(this.cellNumber);
-      console.log(winningArray);
+      cellAmount = cellNumber * cellNumber;
       this.addElement();
       this.clickElement();
     }
@@ -26,7 +28,7 @@
       var gameWindow, i, _i, _results;
       gameWindow = $('.window');
       _results = [];
-      for (i = _i = 1; _i <= 9; i = ++_i) {
+      for (i = _i = 1; 1 <= cellAmount ? _i <= cellAmount : _i >= cellAmount; i = 1 <= cellAmount ? ++_i : --_i) {
         _results.push(gameWindow.append('<li class="item" data-id=' + i + '></li>'));
       }
       return _results;
@@ -111,7 +113,7 @@
       zeroArr = [];
       xArr = [];
       li = $('.window .item');
-      for (i = _i = 0; _i <= 8; i = ++_i) {
+      for (i = _i = 0; 0 <= cellAmount ? _i < cellAmount : _i > cellAmount; i = 0 <= cellAmount ? ++_i : --_i) {
         if (li.eq(i).hasClass('zero')) {
           zero = i + 1;
           zeroArr.push(zero);
@@ -154,6 +156,8 @@
         return location.reload();
       }
     };
+
+    Game.prototype.bot = function() {};
 
     return Game;
 

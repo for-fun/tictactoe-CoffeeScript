@@ -3,19 +3,19 @@ class Game
     elemZero = 0
     elemX = 0
     gameWin = false
+    cellAmount = 0
 
     winningArray = []
 
     constructor: (@cellNumber) ->
         winningArray = @getWinningNumbers(@cellNumber);
-        console.log winningArray
+        cellAmount = cellNumber * cellNumber
         @addElement()
         @clickElement()
 
     addElement: () ->
         gameWindow = $('.window')
-
-        for i in [1..9]
+        for i in [1..cellAmount]
             gameWindow.append('<li class="item" data-id=' + i + '></li>')
 
     clickElement: () ->
@@ -86,7 +86,7 @@ class Game
         xArr = []
         li = $('.window .item')
 
-        for i in [0..8]
+        for i in [0...cellAmount]
             if (li.eq(i).hasClass('zero'))
                 zero = i + 1
                 zeroArr.push(zero)
@@ -121,7 +121,7 @@ class Game
         if (elemZero + elemX == 9)
             alert "Ничья!"
             location.reload()
-
+    bot: () ->
 
 go = new Game(3)
 
