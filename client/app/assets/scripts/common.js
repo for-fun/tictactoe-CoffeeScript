@@ -2,13 +2,15 @@
   var Game, go;
 
   Game = (function() {
-    var elem, elemX, elemZero, winningArray;
+    var elem, elemX, elemZero, gameWin, winningArray;
 
     elem = false;
 
     elemZero = 0;
 
     elemX = 0;
+
+    gameWin = false;
 
     winningArray = [123, 456, 789, 147, 258, 369, 159, 357];
 
@@ -56,7 +58,7 @@
     };
 
     Game.prototype.checkWinning = function(li) {
-      var checker, i, num, x, xArr, xResult, zero, zeroArr, zeroResult, _i, _j, _len;
+      var checker, checkerNumber, i, num, x, xArr, zero, zeroArr, _i, _j, _len;
       this.li = li;
       zeroArr = [];
       xArr = [];
@@ -71,26 +73,33 @@
           xArr.push(x);
         }
       }
-      checker = function(mainStr, checkStr) {
+      checkerNumber = function(mainStr, checkStr) {
         return checkStr.split('').reduce(function(a, b) {
           return a.replace(b, '');
         }, mainStr).length === 0;
+      };
+      checker = function(num, arr, text) {
+        var result;
+        if (gameWin) {
+          return false;
+        }
+        result = checkerNumber(num, arr);
+        if (result === true) {
+          alert(text);
+          gameWin = true;
+          return location.reload();
+        }
       };
       for (_j = 0, _len = winningArray.length; _j < _len; _j++) {
         num = winningArray[_j];
         num = num.toString();
         zeroArr = zeroArr.toString();
         xArr = xArr.toString();
-        zeroResult = checker(num, zeroArr);
-        xResult = checker(num, xArr);
-        if (zeroResult === true) {
-          alert("Нолик выиграл!");
-          location.reload();
-        }
-        if (xResult === true) {
-          alert("Крестик выиграл!");
-          location.reload();
-        }
+        checker(num, zeroArr, 'Нолик выиграл!!');
+        checker(num, xArr, 'Крестик выиграл!!');
+      }
+      if (gameWin) {
+        return false;
       }
       if (elemZero + elemX === 9) {
         alert("Ничья!");

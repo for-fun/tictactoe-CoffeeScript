@@ -2,6 +2,7 @@ class Game
     elem = false
     elemZero = 0
     elemX = 0
+    gameWin = false
 
     winningArray = [
         # по горизонтали
@@ -60,28 +61,30 @@ class Game
                 x = i + 1
                 xArr.push(x)
 
-        checker = (mainStr, checkStr) ->
+        checkerNumber = (mainStr, checkStr) ->
             return checkStr.split('').reduce((a, b) ->
                 return a.replace(b, '');
             , mainStr).length == 0
+
+        checker = (num, arr, text) ->
+            if (gameWin)
+                return false
+            result = checkerNumber(num, arr)
+            if (result == true)
+                alert text
+                gameWin = true
+                location.reload()
 
         for num in winningArray
             num = num.toString()
             zeroArr = zeroArr.toString()
             xArr = xArr.toString()
 
-            zeroResult = checker(num, zeroArr)
-            xResult = checker(num, xArr)
+            checker(num, zeroArr, 'Нолик выиграл!!')
+            checker(num, xArr, 'Крестик выиграл!!')
 
-            if (zeroResult == true)
-                alert "Нолик выиграл!"
-                location.reload()
-                return false
-            if (xResult == true)
-                alert "Крестик выиграл!"
-                location.reload()
-                return false
-
+        if (gameWin)
+            return false
         if (elemZero + elemX == 9)
             alert "Ничья!"
             location.reload()
