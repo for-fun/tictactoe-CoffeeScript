@@ -32,6 +32,8 @@ class Game
         console.log '11'
 
     clickElement: () ->
+        if (gameWin)
+            return false
         gameWindowLi = $('.window .item')
         gameWindowLi.click ->
             $this = $(this)
@@ -49,6 +51,7 @@ class Game
                 Game.prototype.checkWinning.call(this);
 
     checkWinning: (@li) ->
+
         zeroArr = []
         xArr = []
         li = $('.window .item')

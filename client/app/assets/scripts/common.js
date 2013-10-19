@@ -35,6 +35,9 @@
 
     Game.prototype.clickElement = function() {
       var gameWindowLi;
+      if (gameWin) {
+        return false;
+      }
       gameWindowLi = $('.window .item');
       return gameWindowLi.click(function() {
         var $this;
