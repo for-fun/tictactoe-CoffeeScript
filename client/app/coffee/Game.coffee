@@ -4,21 +4,11 @@ class Game
     elemX = 0
     gameWin = false
 
-    winningArray = [
-        # по горизонтали
-        123,
-        456,
-        789,
-        # по вертикали
-        147,
-        258,
-        369,
-        # по диагонали
-        159,
-        357,
-    ]
+    winningArray = []
 
-    constructor: () ->
+    constructor: (@cellNumber) ->
+        winningArray = @getWinningNumbers(@cellNumber);
+        console.log winningArray
         @addElement()
         @clickElement()
 
@@ -47,8 +37,51 @@ class Game
             if (elemZero + elemX >= 5)
                 Game.prototype.checkWinning.call(this);
 
-    checkWinning: () ->
+    getWinningNumbers: (@number) ->
+        blockNumber = @number
+        blockNumberAll = blockNumber * blockNumber
 
+        winArr = []
+        horizontal = []
+        vertical = []
+        diagonalA = []
+        diagonalB = []
+
+        arr = []
+
+        for i in [1..blockNumberAll]
+            arr.push(i)
+            if (i % blockNumber == 0)
+                horizontal.push(arr)
+                arr = []
+
+        for i in [0...blockNumber]
+            num = i
+            for i in [0...horizontal.length]
+                arr.push(horizontal[i][num])
+            vertical.push(arr)
+            arr = []
+
+        number = blockNumber - 1
+        for i in [0...blockNumber]
+            diagonalA.push(horizontal[i][i])
+
+        for i in [0...blockNumber]
+            diagonalB.push(horizontal[i][number])
+            number--
+
+        for i in horizontal
+            winArr.push(i.toString())
+
+        for i in vertical
+            winArr.push(i.toString())
+
+        winArr.push(diagonalA.toString())
+        winArr.push(diagonalB.toString())
+
+        return winArr
+
+    checkWinning: () ->
         zeroArr = []
         xArr = []
         li = $('.window .item')
@@ -90,7 +123,7 @@ class Game
             location.reload()
 
 
-go = new Game
+go = new Game(3)
 
 $.fn.preload = ->
     this.each(->
@@ -98,3 +131,8 @@ $.fn.preload = ->
     )
 
 $(['assets/images/X.png', 'assets/images/0.png']).preload()
+
+
+
+
+

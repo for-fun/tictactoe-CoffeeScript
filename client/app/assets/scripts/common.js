@@ -12,9 +12,12 @@
 
     gameWin = false;
 
-    winningArray = [123, 456, 789, 147, 258, 369, 159, 357];
+    winningArray = [];
 
-    function Game() {
+    function Game(cellNumber) {
+      this.cellNumber = cellNumber;
+      winningArray = this.getWinningNumbers(this.cellNumber);
+      console.log(winningArray);
       this.addElement();
       this.clickElement();
     }
@@ -27,10 +30,6 @@
         _results.push(gameWindow.append('<li class="item" data-id=' + i + '></li>'));
       }
       return _results;
-    };
-
-    Game.prototype.loadImage = function() {
-      return console.log('11');
     };
 
     Game.prototype.clickElement = function() {
@@ -60,9 +59,55 @@
       });
     };
 
-    Game.prototype.checkWinning = function(li) {
-      var checker, checkerNumber, i, num, x, xArr, zero, zeroArr, _i, _j, _len;
-      this.li = li;
+    Game.prototype.getWinningNumbers = function(number) {
+      var arr, blockNumber, blockNumberAll, diagonalA, diagonalB, horizontal, i, num, vertical, winArr, _i, _j, _k, _l, _len, _len1, _m, _n, _o, _ref;
+      this.number = number;
+      blockNumber = this.number;
+      blockNumberAll = blockNumber * blockNumber;
+      winArr = [];
+      horizontal = [];
+      vertical = [];
+      diagonalA = [];
+      diagonalB = [];
+      arr = [];
+      for (i = _i = 1; 1 <= blockNumberAll ? _i <= blockNumberAll : _i >= blockNumberAll; i = 1 <= blockNumberAll ? ++_i : --_i) {
+        arr.push(i);
+        if (i % blockNumber === 0) {
+          horizontal.push(arr);
+          arr = [];
+        }
+      }
+      for (i = _j = 0; 0 <= blockNumber ? _j < blockNumber : _j > blockNumber; i = 0 <= blockNumber ? ++_j : --_j) {
+        num = i;
+        for (i = _k = 0, _ref = horizontal.length; 0 <= _ref ? _k < _ref : _k > _ref; i = 0 <= _ref ? ++_k : --_k) {
+          arr.push(horizontal[i][num]);
+        }
+        vertical.push(arr);
+        arr = [];
+      }
+      number = blockNumber - 1;
+      for (i = _l = 0; 0 <= blockNumber ? _l < blockNumber : _l > blockNumber; i = 0 <= blockNumber ? ++_l : --_l) {
+        diagonalA.push(horizontal[i][i]);
+      }
+      for (i = _m = 0; 0 <= blockNumber ? _m < blockNumber : _m > blockNumber; i = 0 <= blockNumber ? ++_m : --_m) {
+        diagonalB.push(horizontal[i][number]);
+        number--;
+      }
+      for (_n = 0, _len = horizontal.length; _n < _len; _n++) {
+        i = horizontal[_n];
+        winArr.push(i.toString());
+      }
+      for (_o = 0, _len1 = vertical.length; _o < _len1; _o++) {
+        i = vertical[_o];
+        winArr.push(i.toString());
+      }
+      winArr.push(diagonalA.toString());
+      winArr.push(diagonalB.toString());
+      return winArr;
+    };
+
+    Game.prototype.checkWinning = function() {
+      var checker, checkerNumber, i, li, num, x, xArr, zero, zeroArr, _i, _j, _len;
       zeroArr = [];
       xArr = [];
       li = $('.window .item');
@@ -114,7 +159,7 @@
 
   })();
 
-  go = new Game;
+  go = new Game(3);
 
   $.fn.preload = function() {
     return this.each(function() {
