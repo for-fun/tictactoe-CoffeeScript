@@ -15,6 +15,9 @@ class Game
 
     addElement: () ->
         gameWindow = $('.window')
+        cssWidth = @cellNumber * 100
+        console.log cssWidth
+        gameWindow.css({'width': cssWidth, 'height': cssWidth})
         for i in [1..cellAmount]
             gameWindow.append('<li class="item" data-id=' + i + '></li>')
 
@@ -34,8 +37,7 @@ class Game
                 $this.addClass('x')
                 elemX++
                 elem = true
-            if (elemZero + elemX >= 5)
-                Game.prototype.checkWinning.call(this);
+            Game.prototype.checkWinning.call(this);
 
     getWinningNumbers: (@number) ->
         blockNumber = @number
@@ -95,13 +97,14 @@ class Game
                 xArr.push(x)
 
         checkerNumber = (mainStr, checkStr) ->
-            return checkStr.split('').reduce((a, b) ->
-                return a.replace(b, '');
-            , mainStr).length == 0
+            checkStr.split(',').forEach (item) ->
+                mainStr = mainStr.replace(item + ',', '')
+            return mainStr = mainStr.split(',').join('').length == 0
 
         checker = (num, arr, text) ->
             if (gameWin)
                 return false
+            num = num + ','
             result = checkerNumber(num, arr)
             if (result == true)
                 alert text
@@ -118,12 +121,13 @@ class Game
 
         if (gameWin)
             return false
-        if (elemZero + elemX == 9)
+        if (elemZero + elemX == cellAmount)
             alert "Ничья!"
             location.reload()
+
     bot: () ->
 
-go = new Game(3)
+go = new Game(5)
 
 $.fn.preload = ->
     this.each(->

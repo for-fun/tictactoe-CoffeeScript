@@ -25,8 +25,14 @@
     }
 
     Game.prototype.addElement = function() {
-      var gameWindow, i, _i, _results;
+      var cssWidth, gameWindow, i, _i, _results;
       gameWindow = $('.window');
+      cssWidth = this.cellNumber * 100;
+      console.log(cssWidth);
+      gameWindow.css({
+        'width': cssWidth,
+        'height': cssWidth
+      });
       _results = [];
       for (i = _i = 1; 1 <= cellAmount ? _i <= cellAmount : _i >= cellAmount; i = 1 <= cellAmount ? ++_i : --_i) {
         _results.push(gameWindow.append('<li class="item" data-id=' + i + '></li>'));
@@ -55,9 +61,7 @@
           elemX++;
           elem = true;
         }
-        if (elemZero + elemX >= 5) {
-          return Game.prototype.checkWinning.call(this);
-        }
+        return Game.prototype.checkWinning.call(this);
       });
     };
 
@@ -124,15 +128,17 @@
         }
       }
       checkerNumber = function(mainStr, checkStr) {
-        return checkStr.split('').reduce(function(a, b) {
-          return a.replace(b, '');
-        }, mainStr).length === 0;
+        checkStr.split(',').forEach(function(item) {
+          return mainStr = mainStr.replace(item + ',', '');
+        });
+        return mainStr = mainStr.split(',').join('').length === 0;
       };
       checker = function(num, arr, text) {
         var result;
         if (gameWin) {
           return false;
         }
+        num = num + ',';
         result = checkerNumber(num, arr);
         if (result === true) {
           alert(text);
@@ -151,7 +157,7 @@
       if (gameWin) {
         return false;
       }
-      if (elemZero + elemX === 9) {
+      if (elemZero + elemX === cellAmount) {
         alert("Ничья!");
         return location.reload();
       }
@@ -163,7 +169,7 @@
 
   })();
 
-  go = new Game(3);
+  go = new Game(5);
 
   $.fn.preload = function() {
     return this.each(function() {

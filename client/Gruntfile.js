@@ -35,6 +35,7 @@ module.exports = function (grunt) {
 					'<%= conf.path %>/sass/*.sass',
 					'<%= conf.path %>/sass/*.scss',
 					'<%= conf.path %>/*.html',
+					'<%= conf.path %>/assets/scripts/*.js',
 					'<%= conf.path %>/coffee/*.coffee'
 				],
 				options: {
