@@ -2,9 +2,7 @@
   var Game, go;
 
   Game = (function() {
-    var cellAmount, elem, elemX, elemZero, gameWin, winningArray;
-
-    elem = false;
+    var cellAmount, elemX, elemZero, gameWin, winningArray;
 
     elemZero = 0;
 
@@ -49,19 +47,10 @@
       return gameWindowLi.click(function() {
         var $this;
         $this = $(this);
-        if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
-          return false;
-        }
-        if (elem) {
-          $this.addClass('zero');
-          elemZero++;
-          elem = false;
-        } else {
-          $this.addClass('x');
-          elemX++;
-          elem = true;
-        }
-        return Game.prototype.checkWinning.call(this);
+        $this.addClass('x');
+        elemX++;
+        Game.prototype.checkWinning.call(this);
+        return Game.prototype.bot.call(this);
       });
     };
 
@@ -151,25 +140,45 @@
         num = num.toString();
         zeroArr = zeroArr.toString();
         xArr = xArr.toString();
-        checker(num, zeroArr, 'Нолик выиграл!!');
-        checker(num, xArr, 'Крестик выиграл!!');
+        checker(num, zeroArr, 'Вы проиграли :D');
+        checker(num, xArr, 'Вы выиграли =)');
       }
       if (gameWin) {
         return false;
       }
       if (elemZero + elemX === cellAmount) {
         alert("Ничья!");
+        gameWin = true;
         return location.reload();
       }
     };
 
-    Game.prototype.bot = function() {};
+    Game.prototype.bot = function() {
+      var $this, cell, gameWindowLi, getRandomInt;
+      if (gameWin) {
+        return false;
+      }
+      getRandomInt = function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+      gameWindowLi = $('.window .item');
+      cell = getRandomInt(0, cellAmount - 1);
+      console.log(cell);
+      $this = gameWindowLi.eq(cell);
+      if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
+        Game.prototype.bot.call(this);
+        return false;
+      }
+      $this.addClass('zero');
+      elemZero++;
+      return Game.prototype.checkWinning.call(this);
+    };
 
     return Game;
 
   })();
 
-  go = new Game(5);
+  go = new Game(3);
 
   $.fn.preload = function() {
     return this.each(function() {

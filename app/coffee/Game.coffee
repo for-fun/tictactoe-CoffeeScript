@@ -1,5 +1,4 @@
 class Game
-    elem = false
     elemZero = 0
     elemX = 0
     gameWin = false
@@ -25,19 +24,13 @@ class Game
         if (gameWin)
             return false
         gameWindowLi = $('.window .item')
+
         gameWindowLi.click ->
             $this = $(this)
-            if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
-                return false
-            if (elem)
-                $this.addClass('zero')
-                elemZero++
-                elem = false
-            else
-                $this.addClass('x')
-                elemX++
-                elem = true
+            $this.addClass('x')
+            elemX++
             Game.prototype.checkWinning.call(this);
+            Game.prototype.bot.call(this);
 
     getWinningNumbers: (@number) ->
         blockNumber = @number
@@ -116,18 +109,35 @@ class Game
             zeroArr = zeroArr.toString()
             xArr = xArr.toString()
 
-            checker(num, zeroArr, 'Нолик выиграл!!')
-            checker(num, xArr, 'Крестик выиграл!!')
+            checker(num, zeroArr, 'Вы проиграли :D')
+            checker(num, xArr, 'Вы выиграли =)')
 
         if (gameWin)
             return false
         if (elemZero + elemX == cellAmount)
             alert "Ничья!"
+            gameWin = true
             location.reload()
 
     bot: () ->
+        if (gameWin)
+            return false
+        getRandomInt = (min, max) ->
+            Math.floor(Math.random() * (max - min + 1)) + min
 
-go = new Game(5)
+        gameWindowLi = $('.window .item')
+        cell = getRandomInt(0, cellAmount-1)
+        console.log cell
+        $this = gameWindowLi.eq(cell)
+        if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
+            Game.prototype.bot.call(this)
+            return false
+        $this.addClass('zero')
+        elemZero++
+        Game.prototype.checkWinning.call(this);
+
+
+go = new Game(3)
 
 $.fn.preload = ->
     this.each(->
