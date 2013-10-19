@@ -178,7 +178,7 @@
 
   })();
 
-  go = new Game(3);
+  go = new Game(4);
 
   $.fn.preload = function() {
     return this.each(function() {

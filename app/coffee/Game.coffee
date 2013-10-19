@@ -137,7 +137,7 @@ class Game
         Game.prototype.checkWinning.call(this);
 
 
-go = new Game(3)
+go = new Game(4)
 
 $.fn.preload = ->
     this.each(->
