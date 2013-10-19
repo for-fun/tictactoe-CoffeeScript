@@ -28,9 +28,6 @@ class Game
         for i in [1..9]
             gameWindow.append('<li class="item" data-id=' + i + '></li>')
 
-    loadImage: () ->
-        console.log '11'
-
     clickElement: () ->
         if (gameWin)
             return false
@@ -50,7 +47,7 @@ class Game
             if (elemZero + elemX >= 5)
                 Game.prototype.checkWinning.call(this);
 
-    checkWinning: (@li) ->
+    checkWinning: () ->
 
         zeroArr = []
         xArr = []
