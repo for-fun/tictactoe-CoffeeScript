@@ -8,6 +8,7 @@ class Game
 
     constructor: (@cellNumber) ->
         winningArray = @getWinningNumbers(@cellNumber);
+        console.log winningArray
         cellAmount = cellNumber * cellNumber
         @addElement()
         @clickElement()
@@ -15,7 +16,6 @@ class Game
     addElement: () ->
         gameWindow = $('.window')
         cssWidth = @cellNumber * 100
-        console.log cssWidth
         gameWindow.css({'width': cssWidth, 'height': cssWidth})
         for i in [1..cellAmount]
             gameWindow.append('<li class="item" data-id=' + i + '></li>')
@@ -29,8 +29,10 @@ class Game
             $this = $(this)
             if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
                 return false
+            console.log 'юзер ходит'
             $this.addClass('x')
             elemX++
+            console.log 'проверяем ход юзера'
             Game.prototype.checkWinning.call(this);
             Game.prototype.bot.call(this);
 
@@ -79,6 +81,7 @@ class Game
         return winArr
 
     checkWinning: () ->
+        console.log 'проверяем ...'
         zeroArr = []
         xArr = []
         li = $('.window .item')
@@ -92,9 +95,12 @@ class Game
                 xArr.push(x)
 
         checkerNumber = (mainStr, checkStr) ->
+            console.log mainStr, ' -- ', checkStr
             checkStr.split(',').forEach (item) ->
                 mainStr = mainStr.replace(item + ',', '')
-            return mainStr = mainStr.split(',').join('').length == 0
+            result = mainStr.split(',').join('').length == 0
+            console.log ' = ', result
+            return result
 
         checker = (num, arr, text) ->
             if (gameWin)
@@ -106,13 +112,16 @@ class Game
                 gameWin = true
                 location.reload()
 
+        console.log '// ****************'
+        console.log 'СРАВНИВАЕМ ЧИСЛА'
         for num in winningArray
             num = num.toString()
             zeroArr = zeroArr.toString()
             xArr = xArr.toString()
-
             checker(num, zeroArr, 'Вы проиграли :D')
             checker(num, xArr, 'Вы выиграли =)')
+
+        console.log '**************** //'
 
         if (gameWin)
             return false
@@ -122,6 +131,7 @@ class Game
             location.reload()
 
     bot: () ->
+        console.log 'ходит бот'
         if (gameWin)
             return false
         getRandomInt = (min, max) ->
@@ -129,13 +139,14 @@ class Game
 
         gameWindowLi = $('.window .item')
         cell = getRandomInt(0, cellAmount - 1)
-        console.log cell
         $this = gameWindowLi.eq(cell)
         if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
             Game.prototype.bot.call(this)
             return false
         $this.addClass('zero')
         elemZero++
+        console.log 'проверяем ход бота'
+        console.log '--------------------------'
         Game.prototype.checkWinning.call(this);
 
 

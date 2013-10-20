@@ -17,6 +17,7 @@
     function Game(cellNumber) {
       this.cellNumber = cellNumber;
       winningArray = this.getWinningNumbers(this.cellNumber);
+      console.log(winningArray);
       cellAmount = cellNumber * cellNumber;
       this.addElement();
       this.clickElement();
@@ -26,7 +27,6 @@
       var cssWidth, gameWindow, i, _i, _results;
       gameWindow = $('.window');
       cssWidth = this.cellNumber * 100;
-      console.log(cssWidth);
       gameWindow.css({
         'width': cssWidth,
         'height': cssWidth
@@ -50,8 +50,10 @@
         if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
           return false;
         }
+        console.log('юзер ходит');
         $this.addClass('x');
         elemX++;
+        console.log('проверяем ход юзера');
         Game.prototype.checkWinning.call(this);
         return Game.prototype.bot.call(this);
       });
@@ -106,6 +108,7 @@
 
     Game.prototype.checkWinning = function() {
       var checker, checkerNumber, i, li, num, x, xArr, zero, zeroArr, _i, _j, _len;
+      console.log('проверяем ...');
       zeroArr = [];
       xArr = [];
       li = $('.window .item');
@@ -120,10 +123,14 @@
         }
       }
       checkerNumber = function(mainStr, checkStr) {
+        var result;
+        console.log(mainStr, ' -- ', checkStr);
         checkStr.split(',').forEach(function(item) {
           return mainStr = mainStr.replace(item + ',', '');
         });
-        return mainStr = mainStr.split(',').join('').length === 0;
+        result = mainStr.split(',').join('').length === 0;
+        console.log(' = ', result);
+        return result;
       };
       checker = function(num, arr, text) {
         var result;
@@ -138,6 +145,8 @@
           return location.reload();
         }
       };
+      console.log('// ****************');
+      console.log('СРАВНИВАЕМ ЧИСЛА');
       for (_j = 0, _len = winningArray.length; _j < _len; _j++) {
         num = winningArray[_j];
         num = num.toString();
@@ -146,6 +155,7 @@
         checker(num, zeroArr, 'Вы проиграли :D');
         checker(num, xArr, 'Вы выиграли =)');
       }
+      console.log('**************** //');
       if (gameWin) {
         return false;
       }
@@ -158,6 +168,7 @@
 
     Game.prototype.bot = function() {
       var $this, cell, gameWindowLi, getRandomInt;
+      console.log('ходит бот');
       if (gameWin) {
         return false;
       }
@@ -166,7 +177,6 @@
       };
       gameWindowLi = $('.window .item');
       cell = getRandomInt(0, cellAmount - 1);
-      console.log(cell);
       $this = gameWindowLi.eq(cell);
       if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
         Game.prototype.bot.call(this);
@@ -174,6 +184,8 @@
       }
       $this.addClass('zero');
       elemZero++;
+      console.log('проверяем ход бота');
+      console.log('--------------------------');
       return Game.prototype.checkWinning.call(this);
     };
 
