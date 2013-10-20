@@ -126,7 +126,7 @@ class Game
             Math.floor(Math.random() * (max - min + 1)) + min
 
         gameWindowLi = $('.window .item')
-        cell = getRandomInt(0, cellAmount-1)
+        cell = getRandomInt(0, cellAmount - 1)
         console.log cell
         $this = gameWindowLi.eq(cell)
         if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
@@ -143,10 +143,4 @@ $.fn.preload = ->
     this.each(->
         $('<img/>')[0].src = this
     )
-
 $(['assets/images/X.png', 'assets/images/0.png']).preload()
-
-
-
-
-
