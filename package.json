@@ -1,8 +1,8 @@
 {
-  "name": "x-0",
-  "description": "Крестики нолики",
+  "name": "Tic tac toe",
+  "description": "Tic tac toe CoffeeScript",
   "version": "0.0.1",
-  "homepage": "http://github.com/for-fun/x-0",
+  "homepage": "http://github.com/for-fun/tictactoe-CoffeeScript",
   "devDependencies": {
     "grunt": "~0.4.1",
     "load-grunt-tasks": ">=0.1.0",
