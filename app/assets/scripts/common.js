@@ -126,7 +126,7 @@
         var result;
         console.log(mainStr, ' -- ', checkStr);
         checkStr.split(',').forEach(function(item) {
-          return mainStr = mainStr.replace(item + ',', '');
+          return mainStr = mainStr.replace(',' + item + ',', ',');
         });
         result = mainStr.split(',').join('').length === 0;
         console.log(' = ', result);
@@ -137,7 +137,7 @@
         if (gameWin) {
           return false;
         }
-        num = num + ',';
+        num = ',' + num + ',';
         result = checkerNumber(num, arr);
         if (result === true) {
           alert(text);

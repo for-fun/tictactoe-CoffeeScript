@@ -97,7 +97,7 @@ class Game
         checkerNumber = (mainStr, checkStr) ->
             console.log mainStr, ' -- ', checkStr
             checkStr.split(',').forEach (item) ->
-                mainStr = mainStr.replace(item + ',', '')
+                mainStr = mainStr.replace(',' + item + ',', ',')
             result = mainStr.split(',').join('').length == 0
             console.log ' = ', result
             return result
@@ -105,7 +105,7 @@ class Game
         checker = (num, arr, text) ->
             if (gameWin)
                 return false
-            num = num + ','
+            num = ',' + num + ','
             result = checkerNumber(num, arr)
             if (result == true)
                 alert text
