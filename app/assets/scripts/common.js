@@ -47,6 +47,9 @@
       return gameWindowLi.click(function() {
         var $this;
         $this = $(this);
+        if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
+          return false;
+        }
         $this.addClass('x');
         elemX++;
         Game.prototype.checkWinning.call(this);
