@@ -17,7 +17,6 @@
     function Game(cellNumber) {
       this.cellNumber = cellNumber;
       winningArray = this.getWinningNumbers(this.cellNumber);
-      console.log(winningArray);
       cellAmount = cellNumber * cellNumber;
       this.addElement();
       this.clickElement();
@@ -50,10 +49,8 @@
         if ($this.hasClass('zero') === true || $this.hasClass('x') === true) {
           return false;
         }
-        console.log('юзер ходит');
         $this.addClass('x');
         elemX++;
-        console.log('проверяем ход юзера');
         Game.prototype.checkWinning.call(this);
         return Game.prototype.bot.call(this);
       });
@@ -108,7 +105,6 @@
 
     Game.prototype.checkWinning = function() {
       var checker, checkerNumber, i, li, num, x, xArr, zero, zeroArr, _i, _j, _len;
-      console.log('проверяем ...');
       zeroArr = [];
       xArr = [];
       li = $('.window .item');
@@ -124,12 +120,10 @@
       }
       checkerNumber = function(mainStr, checkStr) {
         var result;
-        console.log(mainStr, ' -- ', checkStr);
         checkStr.split(',').forEach(function(item) {
           return mainStr = mainStr.replace(',' + item + ',', ',');
         });
         result = mainStr.split(',').join('').length === 0;
-        console.log(' = ', result);
         return result;
       };
       checker = function(num, arr, text) {
@@ -145,8 +139,6 @@
           return location.reload();
         }
       };
-      console.log('// ****************');
-      console.log('СРАВНИВАЕМ ЧИСЛА');
       for (_j = 0, _len = winningArray.length; _j < _len; _j++) {
         num = winningArray[_j];
         num = num.toString();
@@ -155,7 +147,6 @@
         checker(num, zeroArr, 'Вы проиграли :D');
         checker(num, xArr, 'Вы выиграли =)');
       }
-      console.log('**************** //');
       if (gameWin) {
         return false;
       }
@@ -168,7 +159,6 @@
 
     Game.prototype.bot = function() {
       var $this, cell, gameWindowLi, getRandomInt;
-      console.log('ходит бот');
       if (gameWin) {
         return false;
       }
@@ -184,8 +174,6 @@
       }
       $this.addClass('zero');
       elemZero++;
-      console.log('проверяем ход бота');
-      console.log('--------------------------');
       return Game.prototype.checkWinning.call(this);
     };
 
@@ -193,7 +181,7 @@
 
   })();
 
-  go = new Game(4);
+  go = new Game(5);
 
   $.fn.preload = function() {
     return this.each(function() {

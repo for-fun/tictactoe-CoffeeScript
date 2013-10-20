@@ -3,12 +3,10 @@ class Game
     elemX = 0
     gameWin = false
     cellAmount = 0
-
     winningArray = []
 
     constructor: (@cellNumber) ->
         winningArray = @getWinningNumbers(@cellNumber);
-        console.log winningArray
         cellAmount = cellNumber * cellNumber
         @addElement()
         @clickElement()
@@ -29,10 +27,8 @@ class Game
             $this = $(this)
             if ($this.hasClass('zero') == true || $this.hasClass('x') == true)
                 return false
-            console.log 'юзер ходит'
             $this.addClass('x')
             elemX++
-            console.log 'проверяем ход юзера'
             Game.prototype.checkWinning.call(this);
             Game.prototype.bot.call(this);
 
@@ -81,7 +77,6 @@ class Game
         return winArr
 
     checkWinning: () ->
-        console.log 'проверяем ...'
         zeroArr = []
         xArr = []
         li = $('.window .item')
@@ -95,11 +90,9 @@ class Game
                 xArr.push(x)
 
         checkerNumber = (mainStr, checkStr) ->
-            console.log mainStr, ' -- ', checkStr
             checkStr.split(',').forEach (item) ->
                 mainStr = mainStr.replace(',' + item + ',', ',')
             result = mainStr.split(',').join('').length == 0
-            console.log ' = ', result
             return result
 
         checker = (num, arr, text) ->
@@ -112,16 +105,12 @@ class Game
                 gameWin = true
                 location.reload()
 
-        console.log '// ****************'
-        console.log 'СРАВНИВАЕМ ЧИСЛА'
         for num in winningArray
             num = num.toString()
             zeroArr = zeroArr.toString()
             xArr = xArr.toString()
             checker(num, zeroArr, 'Вы проиграли :D')
             checker(num, xArr, 'Вы выиграли =)')
-
-        console.log '**************** //'
 
         if (gameWin)
             return false
@@ -131,7 +120,6 @@ class Game
             location.reload()
 
     bot: () ->
-        console.log 'ходит бот'
         if (gameWin)
             return false
         getRandomInt = (min, max) ->
@@ -145,12 +133,10 @@ class Game
             return false
         $this.addClass('zero')
         elemZero++
-        console.log 'проверяем ход бота'
-        console.log '--------------------------'
         Game.prototype.checkWinning.call(this);
 
 
-go = new Game(4)
+go = new Game(5)
 
 $.fn.preload = ->
     this.each(->
